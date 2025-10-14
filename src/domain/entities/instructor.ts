@@ -1,10 +1,10 @@
 export class Instructor {
-	public id: string;
-	public name: string;
+  public id: string;
+  public name: string;
 
-	constructor(name: string, id?: string) {
-		this.name = name;
+  constructor(name: string, id?: string) {
+    this.name = name;
 
-		this.id = id ?? crypto.randomUUID();
-	}
+    this.id = id ?? crypto.randomUUID();
+  }
 }

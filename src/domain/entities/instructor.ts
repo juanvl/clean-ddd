@@ -1,10 +1,7 @@
-export class Instructor {
-  public id: string;
-  public name: string;
+import { Entity } from "../../core/entities/entity";
 
-  constructor(name: string, id?: string) {
-    this.name = name;
-
-    this.id = id ?? crypto.randomUUID();
-  }
+interface InstructorProps {
+  name: string;
 }
+
+export class Instructor extends Entity<InstructorProps> {}

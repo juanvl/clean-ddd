@@ -1,5 +1,3 @@
-import { describe, expect, it } from "vitest";
-
 import { Answer } from "../entities/answer";
 import type { AnswersRepository } from "../repositories/answers-repository";
 import { AnswerQuestionUseCase } from "./answer-question";

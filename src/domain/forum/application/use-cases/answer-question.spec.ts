@@ -1,24 +1,23 @@
-import { Answer } from "../../enterprise/entities/answer";
-import type { AnswersRepository } from "../repositories/answers-repository";
+import { InMemoryAnswersRepository } from "test/repositories/in-memory-answers-repository";
 import { AnswerQuestionUseCase } from "./answer-question";
 
-const fakeAnswersRepository: AnswersRepository = {
-  create: async (_answer: Answer) => {
-    return;
-  },
-};
+let inMemoryAnswersRepository: InMemoryAnswersRepository;
+let sut: AnswerQuestionUseCase;
 
-describe("Answer Question Use Case", () => {
-  it("should create an answer to a question", async () => {
-    const useCase = new AnswerQuestionUseCase(fakeAnswersRepository);
+describe("Create Answer", () => {
+  beforeEach(() => {
+    inMemoryAnswersRepository = new InMemoryAnswersRepository();
+    sut = new AnswerQuestionUseCase(inMemoryAnswersRepository);
+  });
 
-    const answer = await useCase.execute({
-      instructorId: "instructor-123",
-      questionId: "question-456",
-      content: "This is the answer to the question.",
+  it("should be able to create a answer", async () => {
+    const { answer } = await sut.execute({
+      questionId: "1",
+      instructorId: "1",
+      content: "Conteúdo da resposta",
     });
 
-    expect(answer).toBeInstanceOf(Answer);
-    expect(answer.content).toBe("This is the answer to the question.");
+    expect(answer.id).toBeTruthy();
+    expect(inMemoryAnswersRepository.items[0]?.id).toEqual(answer.id);
   });
 });

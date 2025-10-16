@@ -1,6 +1,5 @@
+import { makeQuestion } from "test/factories/make-question";
 import { InMemoryQuestionsRepository } from "test/repositories/in-memory-questions-repository";
-import { UniqueEntityID } from "@/core/entities/value-objects/unique-entity-id";
-import { Question } from "../../enterprise/entities/question";
 import { Slug } from "../../enterprise/entities/value-objects/slug";
 import { GetQuestionBySlugUseCase } from "./get-question-by-slug";
 
@@ -14,11 +13,8 @@ describe("Get Question By Slug", () => {
   });
 
   it("should be able to get a question by slug", async () => {
-    const newQuestion = Question.create({
-      authorId: new UniqueEntityID(),
-      title: "Example Question",
+    const newQuestion = makeQuestion({
       slug: Slug.create("example-question"),
-      content: "Example content",
     });
 
     await inMemoryQuestionsRepository.create(newQuestion);
@@ -29,5 +25,13 @@ describe("Get Question By Slug", () => {
 
     expect(question.id).toBeTruthy();
     expect(question.title).toEqual(newQuestion.title);
+  });
+
+  it("should not be able to get a question with an invalid slug", async () => {
+    await expect(() =>
+      sut.execute({
+        slug: "non-existing-question",
+      }),
+    ).rejects.toThrow("Question not found.");
   });
 });

@@ -6,7 +6,7 @@ import { Slug } from "./value-objects/slug";
 
 interface QuestionProps {
   authorId: UniqueEntityID;
-  bestAnswerId: UniqueEntityID | undefined;
+  bestAnswerId?: UniqueEntityID | undefined;
   title: string;
   content: string;
   slug: Slug;
